@@ -1,0 +1,13 @@
+.DS_Store
+node_modules/
+.env
+.env.local
+
+# Vercel が「共有すべきでない」と明記しているため追跡しない
+.vercel/
+
+# 写真フォルダの元データ（カメラ/スマホの未加工ファイル、合計約200MB）は追跡しない。
+# サイトが実際に参照している画像のみ git add -f で明示的に追加している。
+# 元データはローカルおよびiCloudに残るため、この設定でファイルが消えることはない。
+TSUGARU HOUSE1 写真/
+TSUGARU HOUSE2 写真/
