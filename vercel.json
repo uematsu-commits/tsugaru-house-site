@@ -1,0 +1,10 @@
+{
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "has": [{ "type": "host", "value": "tsugaru-house.jp" }],
+      "destination": "https://www.tsugaru-house.jp/$1",
+      "permanent": true
+    }
+  ]
+}

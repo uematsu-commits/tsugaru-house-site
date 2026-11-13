@@ -3,11 +3,31 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- 表示言語の自動判定（本文の描画前に実行して、日本語が一瞬表示されるのを防ぐ） -->
+  <script>
+    function detectLang() {
+      var q = new URLSearchParams(location.search).get('lang');
+      if (q === 'jp' || q === 'en' || q === 'zh') return q;
+      try { var s = localStorage.getItem('th_lang'); if (s === 'jp' || s === 'en' || s === 'zh') return s; } catch (e) {}
+      var prefs = navigator.languages || [navigator.language || 'ja'];
+      for (var i = 0; i < prefs.length; i++) {
+        var x = String(prefs[i]).toLowerCase();
+        if (x.indexOf('ja') === 0) return 'jp';
+        if (x.indexOf('zh') === 0) return 'zh';
+        if (x.indexOf('en') === 0) return 'en';
+      }
+      return 'en'; // 日本語・中国語以外の言語の人には英語で表示
+    }
+    document.documentElement.className = 'lang-' + detectLang();
+  </script>
   <title>TSUGARU HOUSE | 青森・一棟貸し宿泊施設</title>
   <meta name="description" content="青森駅すぐの一棟貸し民宿。昭和レトロな趣のTSUGARU HOUSE 1（最大10名）と、暮らすように泊まれるTSUGARU HOUSE 2（最大7名）。" />
   <!-- OGP -->
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://www.tsugaru-house.jp/" />
+  <link rel="canonical" href="https://www.tsugaru-house.jp/" />
+  <link rel="icon" type="image/png" href="/images/favicon.png" />
+  <link rel="apple-touch-icon" href="/images/apple-touch-icon.png" />
   <meta property="og:title" content="TSUGARU HOUSE | 青森・一棟貸し宿泊施設" />
   <meta property="og:description" content="青森駅すぐの一棟貸し民宿。昭和レトロな趣のTSUGARU HOUSE 1（最大10名）と、暮らすように泊まれるTSUGARU HOUSE 2（最大7名）。" />
   <meta property="og:image" content="https://www.tsugaru-house.jp/ogp.jpg" />
@@ -537,6 +557,13 @@
       .prop-specs-grid { grid-template-columns: 1fr 1fr; }
       .amenity-list { grid-template-columns: 1fr; }
     }
+    /* スマホでもヘッダーに言語ボタンを表示する */
+    @media (max-width: 768px) {
+      .nav-logo { font-size: 15px; letter-spacing: .08em; white-space: nowrap; }
+      .nav-right { gap: 8px; }
+      .nav-right .lang-btns { display: flex; gap: 3px; }
+      .nav-right .lang-btn { padding: 4px 6px; font-size: 10px; letter-spacing: 0; white-space: nowrap; }
+    }
   </style>
 </head>
 <body>
@@ -612,7 +639,7 @@
 ============================================================ -->
 <section class="hero">
   <div class="hero-bg">
-    <img src="TSUGARU HOUSE1 写真/PXL_20250323_022210135.jpg" alt="TSUGARU HOUSE リビング・ダイニング" />
+    <img src="images/h1-living-1920.webp" srcset="images/h1-living-960.webp 960w, images/h1-living-1920.webp 1920w" sizes="100vw" width="1920" height="1446" fetchpriority="high" alt="TSUGARU HOUSE リビング・ダイニング" />
   </div>
   <div class="hero-texture"></div>
   <div class="hero-content">
@@ -757,9 +784,9 @@
 
     <!-- Photo grid -->
     <div class="photo-grid reveal">
-      <div class="ph"><img src="TSUGARU HOUSE1 写真/PXL_20250323_022210135.jpg" alt="リビング・ダイニング" /></div>
-      <div class="ph"><img src="TSUGARU HOUSE1 写真/PXL_20250323_035155625.jpg" alt="寝室" /></div>
-      <div class="ph"><img src="TSUGARU HOUSE1 写真/PXL_20250322_083340228.jpg" alt="バスルーム" /></div>
+      <div class="ph"><img src="images/h1-living-1400.webp" srcset="images/h1-living-700.webp 700w, images/h1-living-1400.webp 1400w" sizes="(max-width: 900px) 100vw, 50vw" width="1400" height="1054" loading="lazy" decoding="async" alt="リビング・ダイニング" /></div>
+      <div class="ph"><img src="images/h1-bedroom-1400.webp" srcset="images/h1-bedroom-700.webp 700w, images/h1-bedroom-1400.webp 1400w" sizes="(max-width: 900px) 100vw, 50vw" width="1400" height="1054" loading="lazy" decoding="async" alt="寝室" /></div>
+      <div class="ph"><img src="images/h1-bath-1400.webp" srcset="images/h1-bath-700.webp 700w, images/h1-bath-1400.webp 1400w" sizes="(max-width: 900px) 100vw, 50vw" width="1400" height="1859" loading="lazy" decoding="async" alt="バスルーム" /></div>
     </div>
 
     <div class="prop-body">
@@ -882,8 +909,6 @@
         <span class="en">Book Now</span>
         <span class="zh">立即預訂</span>
       </a>
-      <a href="https://www.airbnb.jp/rooms/1368837712498942529" target="_blank" class="btn btn-ghost">Airbnb (HOUSE 1)</a>
-      <a href="https://www.airbnb.jp/rooms/1675191393930005612" target="_blank" class="btn btn-ghost">Airbnb (HOUSE 2)</a>
     </div>
   </div>
 </div>
@@ -908,9 +933,9 @@
 
     <!-- Photo grid -->
     <div class="photo-grid reveal">
-      <div class="ph"><img src="TSUGARU HOUSE2 写真/編集済18.jpg" alt="リビング・ダイニング" /></div>
-      <div class="ph"><img src="TSUGARU HOUSE2 写真/編集済5.jpg" alt="寝室（障子窓）" /></div>
-      <div class="ph"><img src="TSUGARU HOUSE2 写真/編集済16.jpg" alt="寝室（3ベッド）" /></div>
+      <div class="ph"><img src="images/h2-living-1108.webp" srcset="images/h2-living-700.webp 700w, images/h2-living-1108.webp 1108w" sizes="(max-width: 900px) 100vw, 50vw" width="1108" height="1339" loading="lazy" decoding="async" alt="リビング・ダイニング" /></div>
+      <div class="ph"><img src="images/h2-bedroom-shoji-1400.webp" srcset="images/h2-bedroom-shoji-700.webp 700w, images/h2-bedroom-shoji-1400.webp 1400w" sizes="(max-width: 900px) 100vw, 50vw" width="1400" height="1050" loading="lazy" decoding="async" alt="寝室（障子窓）" /></div>
+      <div class="ph"><img src="images/h2-bedroom-3beds-1400.webp" srcset="images/h2-bedroom-3beds-700.webp 700w, images/h2-bedroom-3beds-1400.webp 1400w" sizes="(max-width: 900px) 100vw, 50vw" width="1400" height="1050" loading="lazy" decoding="async" alt="寝室（3ベッド）" /></div>
     </div>
 
     <div class="prop-body">
@@ -1475,7 +1500,7 @@
             <span class="en">Book Direct (Best Rate)</span>
             <span class="zh">官網預訂（最優惠）</span>
           </a>
-          <a href="https://www.airbnb.jp/rooms/1368837712498942529" target="_blank" class="btn btn-outline btn-sm">Airbnb</a>
+          <a href="https://www.airbnb.jp/rooms/1368837712498942529" target="_blank" class="ota-link">Airbnb</a>
         </div>
       </div>
       <div class="book-card">
@@ -1492,7 +1517,7 @@
             <span class="en">Book Direct (Best Rate)</span>
             <span class="zh">官網預訂（最優惠）</span>
           </a>
-          <a href="https://www.airbnb.jp/rooms/1675191393930005612" target="_blank" class="btn btn-outline btn-sm">Airbnb</a>
+          <a href="https://www.airbnb.jp/rooms/1675191393930005612" target="_blank" class="ota-link">Airbnb</a>
         </div>
       </div>
     </div>
@@ -1512,7 +1537,7 @@
     <div class="footer-top">
       <div>
         <div class="footer-logo" style="display:flex;align-items:center;gap:14px;">
-          <img src="【ロゴ2】篠田民泊プロジェクト.jpg" alt="Tsugaru House" style="width:40px;height:auto;filter:invert(1);opacity:0.6;">
+          <img src="images/logo.png" alt="Tsugaru House" width="40" height="28" loading="lazy" style="width:40px;height:auto;filter:invert(1);opacity:0.6;">
           TSUGARU HOUSE
         </div>
         <p class="footer-tagline jp">青森駅すぐ。昭和の薫りと現代の快適さが交わる、二つの一棟貸し宿泊施設。</p>
@@ -1593,16 +1618,62 @@
 <script>
   /* --- Language --- */
   let currentLang = 'jp';
+  const HTML_LANG = { jp: 'ja', en: 'en', zh: 'zh-Hant' };
+  const TITLES = {
+    jp: 'TSUGARU HOUSE | 青森駅徒歩1分・最大10名の一棟貸し宿',
+    en: 'TSUGARU HOUSE | Private Vacation Rental 1 min from Aomori Station (up to 10 guests)',
+    zh: 'TSUGARU HOUSE | 青森站步行1分鐘・最多10人整棟民宿'
+  };
+  // 予約ページ（AirHost）の言語。繁體中文ページは翻訳抜けがあるため、直るまでは英語にする
+  const AIRHOST_LANG = { jp: 'ja', en: 'en', zh: 'en' };
+  const AIRBNB_HOST = { jp: 'www.airbnb.jp', en: 'www.airbnb.com', zh: 'www.airbnb.com.tw' };
+  const BOOKING_LANG = { jp: 'ja', en: 'en-gb', zh: 'zh-tw' };
+
   function setLang(lang) {
     currentLang = lang;
     document.documentElement.className = 'lang-' + lang;
-    document.documentElement.lang = lang === 'jp' ? 'ja' : lang === 'en' ? 'en' : 'zh';
+    document.documentElement.lang = HTML_LANG[lang];
+    document.title = TITLES[lang];
     document.querySelectorAll('.lang-btn').forEach(btn => {
       const map = {jp:'JP', en:'EN', zh:'中文'};
       btn.classList.toggle('on', btn.textContent.trim() === map[lang]);
     });
+    // 予約リンクを表示言語に合わせて書き換える
+    document.querySelectorAll('a[href]').forEach(a => {
+      let u;
+      try { u = new URL(a.href); } catch (e) { return; }
+      if (u.hostname.endsWith('airhost.co')) {
+        const rest = u.pathname.replace(/^\/(ja|en|zh-TW|zh-CN|ko)(?=\/|$)/, '');
+        u.pathname = '/' + AIRHOST_LANG[lang] + (rest === '/' ? '' : rest);
+      } else if (/(^|\.)airbnb\./.test(u.hostname)) {
+        u.hostname = AIRBNB_HOST[lang];
+      } else if (u.hostname.endsWith('booking.com')) {
+        u.pathname = u.pathname.replace(/\.[a-z-]+\.html$/, '.' + BOOKING_LANG[lang] + '.html');
+      } else {
+        return;
+      }
+      a.href = u.toString();
+    });
+    try { localStorage.setItem('th_lang', lang); } catch (e) {}
   }
-  setLang('jp');
+  setLang(detectLang());
+
+  /* --- 予約クリックの計測（GA4） --- */
+  document.addEventListener('click', e => {
+    const a = e.target.closest('a[href]');
+    if (!a || typeof gtag !== 'function') return;
+    const h = a.href;
+    const house = /812486|1368837712498942529|tsugaru-house\.[a-z-]+\.html/.test(h) ? 'house1'
+                : /812487|1675191393930005612|tsugaru-house2\./.test(h) ? 'house2' : 'any';
+    const placeEl = a.closest('[id]');
+    const place = a.closest('.booking-strip') ? 'booking-strip'
+                : a.closest('.hero') ? 'hero' : (placeEl ? placeEl.id : 'other');
+    if (h.includes('airhost.co')) {
+      gtag('event', 'click_book_direct', { house: house, lang: currentLang, place: place });
+    } else if (/airbnb\.|booking\.com/.test(h)) {
+      gtag('event', 'click_ota', { ota: h.includes('airbnb') ? 'airbnb' : 'booking', house: house, lang: currentLang, place: place });
+    }
+  });
 
   /* --- Nav scroll --- */
   const nav = document.getElementById('nav');
