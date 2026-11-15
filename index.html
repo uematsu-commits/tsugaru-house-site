@@ -1627,8 +1627,8 @@
     en: 'TSUGARU HOUSE | Private Vacation Rental 1 min from Aomori Station (up to 10 guests)',
     zh: 'TSUGARU HOUSE | 青森站步行1分鐘・最多10人整棟民宿'
   };
-  // 予約ページ（AirHost）の言語。繁體中文ページは翻訳抜けがあるため、直るまでは英語にする
-  const AIRHOST_LANG = { jp: 'ja', en: 'en', zh: 'en' };
+  // 予約ページ（AirHost）の言語。中文は /zh/（/zh-TW/ は翻訳抜けがあるため使わない）
+  const AIRHOST_LANG = { jp: 'ja', en: 'en', zh: 'zh' };
   const AIRBNB_HOST = { jp: 'www.airbnb.jp', en: 'www.airbnb.com', zh: 'www.airbnb.com.tw' };
   const BOOKING_LANG = { jp: 'ja', en: 'en-gb', zh: 'zh-tw' };
 
@@ -1646,7 +1646,7 @@
       let u;
       try { u = new URL(a.href); } catch (e) { return; }
       if (u.hostname.endsWith('airhost.co')) {
-        const rest = u.pathname.replace(/^\/(ja|en|zh-TW|zh-CN|ko)(?=\/|$)/, '');
+        const rest = u.pathname.replace(/^\/(ja|en|zh-TW|zh-CN|zh|ko)(?=\/|$)/, '');
         u.pathname = '/' + AIRHOST_LANG[lang] + (rest === '/' ? '' : rest);
       } else if (/(^|\.)airbnb\./.test(u.hostname)) {
         u.hostname = AIRBNB_HOST[lang];
